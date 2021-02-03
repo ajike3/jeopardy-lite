@@ -6,7 +6,7 @@ class Jeopardy extends Component {
     super(props);
     this.client = new JeopardyService();
     this.state = {
-      data: null,
+      data: {},
       score: 0,
       answer: ""
     }
@@ -15,7 +15,7 @@ class Jeopardy extends Component {
   getNewQuestion() {
     return this.client.getQuestion().then(result => {
       this.setState({
-        data: result.data
+        data: result.data[0]
       })
     })
   }
@@ -50,21 +50,18 @@ class Jeopardy extends Component {
   }
 
   render() {
+    if(!this.state.data.category){
+      return ( <div> Loading... </div> )
+    }
     return (
-      <div className="jeopardyContainer">
-        {this.state.data && (
-            <div>
-                {this.state.data.map((item, id) => {
-                    return (
-                        <div key={id}>
-                            <h2>Category: {item.category.title}</h2>
-                            <h2>Question: {item.question}</h2>
-                            <h2>Worth: ${item.value}</h2>
-                        </div>
-                   )
-                })}
+      <div className="jeopardy-container">
+              <div>
+                  <h2>Category: {this.state.data.category.title}</h2>
+                  <h2>Question: {this.state.data.question}</h2>
+                  <h2>Worth: ${this.state.data.value}</h2>
+              </div>
             </div>
-            )}
+            )
 
         <h2>Score: ${this.state.score}</h2>
         
