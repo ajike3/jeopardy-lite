@@ -26,11 +26,11 @@ class Jeopardy extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    let value = this.state.data[0].value;
+    let value = this.state.data.value;
     let currentScore = this.state.score;
 
     if(this.state.answer.toLowerCase() ===
-        this.state.data[0].answer.toLowerCase()) {
+        this.state.data.answer.toLowerCase()) {
             this.setState({
                 score : value + currentScore
             })
